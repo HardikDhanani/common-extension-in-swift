@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  swiftlearn
+
+  Created by mac-0008 on 22/04/16.
+  Copyright © 2016 com.demo. All rights reserved.
+*/
+
+HelloKey = "Hello!";
