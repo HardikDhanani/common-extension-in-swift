@@ -109,14 +109,21 @@ var ActionBlockKey: UInt8 = 0
 var AlertBlockKey: UInt8 = 0
 var SetPickerBlockKey: UInt8 = 0
 var SetPickerDataBlockKey: UInt8 = 0
-
-//var c1 : WeightWheelController!
-
+var datePickerBlock: UInt8 = 0
+var dateformat: UInt8 = 0
+var datePickerMode: UInt8 = 0
+var defaultValue: UInt8 = 0
+var minuteInterval: UInt8 = 0
+var minimumDate: UInt8 = 0
+var maximumDate: UInt8 = 0
+var countdownPickerBlock: UInt8 = 0
 
 // MARK: A type for our action block closure
 typealias BlockButtonActionBlock = (sender: UIButton) -> Void
 typealias BlockAlertBlock = (buttonIndexs: Int) -> Void
 typealias PickerSelectRow = (text: String, row: NSInteger, component: NSInteger) -> Void
+typealias DatePickerValueChanged = (date: NSDate) -> Void
+typealias CountDownPickerValueChanged = (interval: NSTimeInterval) -> Void
 
 // MARK: Convert all action block closure to variable object
 class ActionBlockWrapper : NSObject
@@ -148,10 +155,21 @@ class SetpickerDelegate : NSObject
 
 class PickerBlockWrapper : NSObject {
     var block : PickerSelectRow
-    var picker : UIPickerView = UIPickerView()
-    
-    var textfiled : UITextField = UITextField()
     init(block: PickerSelectRow) {
+        self.block = block
+    }
+}
+
+class DatePickerBlockWrapper : NSObject {
+    var block : DatePickerValueChanged
+    init(block: DatePickerValueChanged) {
+        self.block = block
+    }
+}
+
+class CountDownPickerBlockWrapper : NSObject {
+    var block : CountDownPickerValueChanged
+    init(block: CountDownPickerValueChanged) {
         self.block = block
     }
 }
@@ -188,17 +206,9 @@ extension UIButton
     }
 }
 
-@objc protocol MyTextFieldDelegateProtocol: UITextFieldDelegate {}
+var textFieldDatePickerDateFormatter: NSDateFormatter? = nil
 
-extension MyTextFieldDelegateProtocol
-{
-    func textFieldDidBeginEditing(textField: UITextField)
-    {
-        print("shouldChangeCharactersInRange called")
-    }
-}
-
-extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource {
+extension UITextField: UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     /// The `UIPickerView` for the text field. Set this to configure the `inputView` and `inputAccessoryView` for the text field.
     public var pickerView: UIPickerView?
@@ -226,16 +236,18 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
         }
     }
     
+
     private func setInputViewToPicker(picker: UIView?) {
         self.inputView = picker
         self.inputAccessoryView = picker != nil ? pickerToolbar() : nil
     }
     
+    // Set Toolbar in UITextFiled
     private func pickerToolbar() -> UIToolbar
     {
         let toolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 44))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "didPressPickerDoneButton:")
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(UITextField.didPressPickerDoneButton(_:)))
         toolbar.items = [flexibleSpace, doneButton]
         return toolbar
     }
@@ -259,13 +271,7 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
         static var DateFormat = "am_DateFormat"
     }
     
-//    /**
-//     This method is called when the "Done" button on the `inputAccessoryView` toolbar is pressed.
-//     
-//     :discussion: This method will set the text field's text with the title for the selected row in the `pickerView` in component `0` from the `pickerView`'s `delegate.
-//     
-//     - parameter sender: The "Done" button sending the action.
-//     */
+    // Toolbar Ok action
     public func didPressPickerDoneButton(sender: AnyObject) {
         guard pickerView != nil || datePicker != nil else { return }
         
@@ -280,7 +286,7 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
         })
         resignFirstResponder()
     }
-//
+
     private func setTextFromPickerView() {
         if let selectedRow = pickerView?.selectedRowInComponent(0),
             title = pickerView?.delegate?.pickerView?(pickerView!, titleForRow: selectedRow, forComponent: 0) {
@@ -295,7 +301,8 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
             self.text = formatter.stringFromDate(date)
         }
     }
-
+    
+    // MARK: UIPickerView Method for Drop Down in Text Field
     
     func setPickerData(pickedData: AnyObject, block: PickerSelectRow) -> Void {
         objc_setAssociatedObject(self, &SetPickerBlockKey, PickerBlockWrapper(block: block), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -307,15 +314,19 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
         
         self.delegate = self
         self.inputView = self.textFieldPicker()
+        
+        // App crash below line
+        
 //        self.valueForKey("textInputTraits")?.setValue([UIColor .clearColor()], forKey: "insertionPointColor")
     
         if self.isFirstResponder()
         {
-//            pickerView!.reloadAllComponents()
+            pickerView!.reloadAllComponents()
             self.setInitialSelectedRow()
         }
     }
     
+    // Set First Row when textfield is blank
     func setInitialSelectedRow() -> Void
     {
         if self.pickerArray().containsObject(self.text!)
@@ -324,13 +335,9 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
             pickerView!.selectRow(index, inComponent: 0, animated: false)
             self.text = self.pickerArray().objectAtIndex(index) as? String
         }
-//        else if self.pickerArray().count > 0
-//        {
-//            pickerView!.selectRow(0, inComponent: 0, animated: false)
-//            self.text = self.pickerArray().objectAtIndex(0) as? String
-//        }
     }
     
+    // Get Picker Data for perticular text field
     func pickerArray() -> NSArray
     {
         let data = objc_getAssociatedObject(self, &SetPickerDataBlockKey) as! NSArray
@@ -342,38 +349,187 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
         return data
     }
     
+    // Return Picker View
     func textFieldPicker() -> UIPickerView
     {
         self.pickerView = UIPickerView()
-//        c1 = WeightWheelController(pickerInterval: self.pickerArray(), txtField:self,picker: self.pickerView!)
         self.pickerView!.dataSource = self
         self.pickerView!.delegate = self
-//        c1.pickerViewData.reloadAllComponents()
         return self.pickerView!
     }
     
+    // MARK: UIDatePicker Method for Drop Down in Text Field
+    
+    func setDatePickerWithDateFormat(format : NSString) -> Void {
+        self.setDatePickerWithDateFormat(format, date: NSDate())
+    }
+    
+    func setDatePickerWithDateFormat(format: NSString, date: NSDate) -> Void {
+        self.setDatePickerWithDateFormat(format, date: date, block: objc_getAssociatedObject(self, &datePickerBlock) as!  DatePickerValueChanged)
+    }
+    
+    func setDatePickerWithDateFormat(format: NSString, date: NSDate, block: DatePickerValueChanged) -> Void
+    {
+        self .setDatePickerMode(UIDatePickerMode.DateAndTime)
+        
+        objc_setAssociatedObject(self, &dateformat, format, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &datePickerBlock, DatePickerBlockWrapper(block: block), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        
+        self.delegate = self
+        self.inputView = self.textFieldDatePicker()
+    }
+    
+    // MARK: - UIDatePicker Properties
+    
+    func setMinuteInterval(interval: NSInteger)
+    {
+        objc_setAssociatedObject(self, &minuteInterval, interval, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+    
+        if self.isFirstResponder()
+        {
+            self.datePicker?.minuteInterval = objc_getAssociatedObject(self, &minuteInterval) as! NSInteger
+        }
+    }
+    
+    func setMinimumDate(date: NSDate) -> Void {
+    
+        objc_setAssociatedObject(self, &minimumDate, date, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+    
+        if self.isFirstResponder()
+        {
+            self.datePicker?.minimumDate = objc_getAssociatedObject(self, &minimumDate) as? NSDate
+        }
+    }
+    
+    func setMaximumDate(date: NSDate) -> Void {
+        objc_setAssociatedObject(self, &maximumDate, date, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+    
+        if self.isFirstResponder()
+        {
+            self.datePicker?.maximumDate = objc_getAssociatedObject(self, &maximumDate) as? NSDate
+        }
+    }
+    
+    func setDate(date: NSDate) -> Void {
+        
+        objc_setAssociatedObject(self, &defaultValue, date, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        self.text = self .DatePickerDateFormatter() .stringFromDate(date)
+        
+        let wrapper = objc_getAssociatedObject(self, &datePickerBlock) as! DatePickerBlockWrapper
+        wrapper.block(date: date)
+        
+        if self.isFirstResponder() {
+            self.datePicker?.date = date
+        }
+    }
+    
+    func setDatePickerMode(mode: UIDatePickerMode) -> Void {
+        
+        objc_setAssociatedObject(self, &datePickerMode, mode.hashValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        
+        if self .isFirstResponder() {
+            self.datePicker?.datePickerMode = objc_getAssociatedObject(self, &datePickerMode) as! UIDatePickerMode
+        }
+    }
+    
+    func setCountDownDuration(interval: NSTimeInterval) -> Void {
+        
+        objc_setAssociatedObject(self, &defaultValue, interval, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        
+//        let wrapper = objc_getAssociatedObject(self, &datePickerBlock) as! DatePickerBlockWrapper
+//        wrapper.block(date: date)
+//        
+//        if self.isFirstResponder() {
+//            self.datePicker?.date = date
+//        }
+    }
+    
+    
+    func DatePickerDateFormatter() -> NSDateFormatter
+    {
+        var onceToken: dispatch_once_t = 0
+        dispatch_once(&onceToken, {() -> Void in
+           textFieldDatePickerDateFormatter = NSDateFormatter()
+        })
+        
+        textFieldDatePickerDateFormatter!.dateFormat = objc_getAssociatedObject(self, &dateformat) as! String
+
+        return textFieldDatePickerDateFormatter!
+    }
+    
+    func textFieldDatePicker() -> UIDatePicker {
+        
+        var onceToken: dispatch_once_t = 0
+        dispatch_once(&onceToken , {() -> Void in
+            self.datePicker = UIDatePicker()
+        })
+
+        self.datePicker?.timeZone = NSTimeZone.defaultTimeZone()
+        
+        return self.datePicker!
+    }
+    
+    func datePickerValueChanged(datepicker: UIDatePicker) -> Void {
+        
+        switch datepicker.datePickerMode
+        {
+        case UIDatePickerMode.Time:
+            self.setblockforDate(datepicker)
+            break
+        case UIDatePickerMode.Date:
+            self.setblockforDate(datepicker)
+            break
+        case UIDatePickerMode.DateAndTime:
+            self.setblockforDate(datepicker)
+            break
+        default:
+            break
+        }
+        
+    }
+    
+    func setblockforDate(datepicker: UIDatePicker) -> Void {
+        objc_setAssociatedObject(self, &defaultValue, datepicker.date, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        self.text = self .DatePickerDateFormatter() .stringFromDate(datepicker.date)
+        
+        let wrapper = objc_getAssociatedObject(self, &datePickerBlock) as! DatePickerBlockWrapper
+        wrapper.block(date: datepicker.date)
+    }
+    
+    // Delegate Method for UITextField
     public func textFieldDidBeginEditing(textField: UITextField)
     {
         if ((textField.inputView?.isKindOfClass(UIPickerView)) != nil)
         {
             print(pickerView)
-//            let vc = WeightWheelController(pickerInterval: self.pickerArray(), txtField:textField,picker: self.pickerView!)
             self.pickerView!.reloadAllComponents()
             self.setInitialSelectedRow()
+        }else if ((textField.inputView?.isKindOfClass(UIDatePicker)) != nil)
+        {
+           self.datePicker!.removeTarget(self, action: nil, forControlEvents: UIControlEvents.ValueChanged)
+           self.datePicker!.addTarget(self, action: #selector(UITextField.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+            
+           self.datePicker?.datePickerMode = objc_getAssociatedObject(self, &datePickerMode) as! UIDatePickerMode
+            
+            switch self.datePicker!.datePickerMode
+            {
+                case UIDatePickerMode.Time:
+                
+                    break
+                case UIDatePickerMode.Date:
+                
+                    break
+                case UIDatePickerMode.DateAndTime:
+                
+                    break
+                default:
+                    break
+            }
+            
         }
     }
     
-//    let ElementCount: NSArray!
-//    let txtDta:UITextField!
-//    let pickerViewData:UIPickerView!
-//    
-//    init(pickerInterval: NSArray, txtField: UITextField, picker: UIPickerView)
-//    {
-//        ElementCount = pickerInterval
-//        txtDta = txtField
-//        pickerViewData = picker
-//    }
-    
+    // Delagate & DataSource Method for UIPickerView
     public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
     {
         return 1
@@ -396,48 +552,3 @@ extension UITextField: UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewData
         self.text = pickerArray()[row] as? String
     }
 }
-
-func setDatePickerWithDateFormate(formate: String) -> Void
-{
-    
-}
-
-func setDatePickerWithDateFormate(formate: String, defaultDate:NSDate) -> Void {
-    
-}
-
-//class WeightWheelController: NSObject, UIPickerViewDelegate, UIPickerViewDataSource
-//{
-//    let ElementCount: NSArray!
-//    let txtDta:UITextField!
-//    let pickerViewData:UIPickerView!
-//    
-//    init(pickerInterval: NSArray, txtField: UITextField, picker: UIPickerView)
-//    {
-//        ElementCount = pickerInterval
-//        txtDta = txtField
-//        pickerViewData = picker
-//    }
-//    
-//    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
-//    {
-//        return 1
-//    }
-//    
-//    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
-//    {
-//        return ElementCount.count
-//    }
-//    
-//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-//    {
-//        return ElementCount[row] as? String
-//    }
-//    
-//    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
-//    {
-//        let wrapper = objc_getAssociatedObject(txtDta, &SetPickerBlockKey) as! PickerBlockWrapper
-//        wrapper.block(text: ElementCount[row] as! String, row: row, component: component)
-//        txtDta.text = ElementCount[row] as? String
-//    }
-//}

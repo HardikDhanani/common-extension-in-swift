@@ -103,14 +103,14 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         cheDate = cheDate.durationString("1461569062")
         print("\(cheDate)")
         
-        let alert:UIAlertView = UIAlertView()
-        alert.title = "Alert"
-        alert.message = "Hi, r u there!"
-        alert.addButtonWithTitle("Ok")
-        alert.addButtonWithTitle("Cancel")
-        alert.show { (buttonIndexs) in
-            
-        }
+//        let alert:UIAlertView = UIAlertView()
+//        alert.title = "Alert"
+//        alert.message = "Hi, r u there!"
+//        alert.addButtonWithTitle("Ok")
+//        alert.addButtonWithTitle("Cancel")
+//        alert.show { (buttonIndexs) in
+//            
+//        }
         
         NSLog("%@", NSLocalizedString("HelloKey", comment: "sdfdsfdf"))
         
@@ -128,8 +128,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
         let pickerDataSource: NSArray = ["White", "Red", "Green", "Blue"]
         let pickerDataSource2: NSArray = ["1", "2", "3", "4"]
-        
-        txtDateDropDown.set
         
         txtDropdown.setPickerData(pickerDataSource) { (text, row, component) in
         }
