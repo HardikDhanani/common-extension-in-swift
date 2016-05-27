@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ViewController: UIViewController, UICollisionBehaviorDelegate {
+class HomeController: UIViewController, UICollisionBehaviorDelegate {
     var animator: UIDynamicAnimator!
     var gravity: UIGravityBehavior!
     var collision: UICollisionBehavior!
@@ -20,7 +20,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     @IBOutlet var txtDateDropDown: UITextField!
     @IBOutlet var txtDropdown: UITextField!
     @IBOutlet var txtDropdown2: UITextField!
-    @IBOutlet var but: UIButton!
+    @IBOutlet var but: OnOffButton!
     
     var square: UIView!
     var snap: UISnapBehavior!
@@ -97,7 +97,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
         
         
-        view.backgroundColor = UIColor.fromRgbHex(585752)
+        //view.backgroundColor = UIColor.fromRgbHex(585752)
         
         var cheDate:String = "1461569062"
         cheDate = cheDate.durationString("1461569062")
@@ -123,7 +123,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         });
         
         but.touchUpInsideClicked({ (sender) in
-            
+            self.but.checked = !self.but.checked
         });
         
         let pickerDataSource: NSArray = ["White", "Red", "Green", "Blue"]
@@ -135,7 +135,22 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         txtDropdown2.setPickerData(pickerDataSource2) { (text, row, component) in
         }
         
+        
+        
+        txtDateDropDown.setDatePickerWithDateFormat("dd MMM yyyy", date: NSDate()) { (date) in
+            
+        }
+        
+        txtDateDropDown.setDatePickerMode(UIDatePickerMode.Date)
+        
+        self.getContacts { (contacts, error) in
+            for contact in contacts {
+                let Temp: HDContact = HDContact(contact: contact)
+                print(Temp.displayName())
+            }
+        }
     }
+    
     
     override func didReceiveMemoryWarning()
     {

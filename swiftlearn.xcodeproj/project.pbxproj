@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		701F24211CB2326D00623A92 /* NSString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F24201CB2326D00623A92 /* NSString+Extension.swift */; };
+		701F24211CB2326D00623A92 /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F24201CB2326D00623A92 /* CommonExtension.swift */; };
 		7028FA581C9FC73100246306 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7028FA571C9FC73100246306 /* AppDelegate.swift */; };
-		7028FA5A1C9FC73100246306 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7028FA591C9FC73100246306 /* ViewController.swift */; };
+		7028FA5A1C9FC73100246306 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7028FA591C9FC73100246306 /* HomeController.swift */; };
 		7028FA5D1C9FC73100246306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7028FA5B1C9FC73100246306 /* Main.storyboard */; };
 		7028FA5F1C9FC73100246306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7028FA5E1C9FC73100246306 /* Assets.xcassets */; };
 		7028FA621C9FC73100246306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7028FA601C9FC73100246306 /* LaunchScreen.storyboard */; };
@@ -17,10 +17,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		701F24201CB2326D00623A92 /* NSString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+Extension.swift"; sourceTree = "<group>"; };
+		701F24201CB2326D00623A92 /* CommonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtension.swift; sourceTree = "<group>"; };
 		7028FA541C9FC73100246306 /* swiftlearn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swiftlearn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7028FA571C9FC73100246306 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7028FA591C9FC73100246306 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7028FA591C9FC73100246306 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7028FA5C1C9FC73100246306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7028FA5E1C9FC73100246306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7028FA611C9FC73100246306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,12 +65,12 @@
 			isa = PBXGroup;
 			children = (
 				7028FA571C9FC73100246306 /* AppDelegate.swift */,
-				7028FA591C9FC73100246306 /* ViewController.swift */,
+				7028FA591C9FC73100246306 /* HomeController.swift */,
 				7028FA5B1C9FC73100246306 /* Main.storyboard */,
 				7028FA5E1C9FC73100246306 /* Assets.xcassets */,
 				7028FA601C9FC73100246306 /* LaunchScreen.storyboard */,
 				7028FA631C9FC73100246306 /* Info.plist */,
-				701F24201CB2326D00623A92 /* NSString+Extension.swift */,
+				701F24201CB2326D00623A92 /* CommonExtension.swift */,
 				70EDB3701CCA1049007AE8CA /* Localizable.strings */,
 			);
 			path = swiftlearn;
@@ -150,8 +150,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				701F24211CB2326D00623A92 /* NSString+Extension.swift in Sources */,
-				7028FA5A1C9FC73100246306 /* ViewController.swift in Sources */,
+				701F24211CB2326D00623A92 /* CommonExtension.swift in Sources */,
+				7028FA5A1C9FC73100246306 /* HomeController.swift in Sources */,
 				7028FA581C9FC73100246306 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,10 +277,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mehul Rajput (85LTB77RPZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mehul Rajput (85LTB77RPZ)";
 				INFOPLIST_FILE = swiftlearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.demo.swiftlearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6d4e4daa-491d-46de-adaf-c1a2a4943044";
 			};
 			name = Debug;
 		};
@@ -288,10 +291,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mehul Rajput (85LTB77RPZ)";
 				INFOPLIST_FILE = swiftlearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.demo.swiftlearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6d4e4daa-491d-46de-adaf-c1a2a4943044";
 			};
 			name = Release;
 		};

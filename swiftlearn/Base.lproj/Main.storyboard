@@ -5,18 +5,22 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Home Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="swiftlearn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeController" customModule="swiftlearn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ypd-J8-KpV" customClass="pap">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.23921568630000001" green="0.67450980390000004" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-as-ndt">
                                 <rect key="frame" x="45" y="222" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.49782402453171815" green="1" blue="0.91983018165634212" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,9 +35,19 @@
                                 <rect key="frame" x="45" y="268" width="46" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.39255759967250792" blue="0.23738761959333432" alpha="1" colorSpace="calibratedRGB"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9C-lX-w8u">
-                                <rect key="frame" x="45" y="306" width="46" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.25705792344941358" blue="0.88045676360738523" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9C-lX-w8u" customClass="OnOffButton" customModule="swiftlearn" customModuleProvider="target">
+                                <rect key="frame" x="45" y="306" width="187" height="99"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="strokeColor">
+                                        <color key="value" red="1" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ringAlpha">
+                                        <real key="value" value="0.69999999999999996"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sUz-vU-hKv">
                                 <rect key="frame" x="45" y="112" width="97" height="30"/>
@@ -51,10 +65,17 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.36470588240000001" green="0.51372549020000002" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ypd-J8-KpV" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Zbq-bs-GHg"/>
+                            <constraint firstAttribute="trailing" secondItem="Ypd-J8-KpV" secondAttribute="trailing" id="tFy-in-1Ex"/>
+                            <constraint firstItem="Ypd-J8-KpV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="wsU-pG-C73"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ypd-J8-KpV" secondAttribute="bottom" id="ycA-5A-14e"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="but" destination="f9C-lX-w8u" id="mhL-7y-Pnm"/>
+                        <outlet property="but" destination="f9C-lX-w8u" id="PKl-s8-8xy"/>
                         <outlet property="buttont" destination="CTT-as-ndt" id="Hjc-D3-gf5"/>
                         <outlet property="touc" destination="iL2-G8-8Vt" id="u04-km-cId"/>
                         <outlet property="txtDateDropDown" destination="KLE-S1-yPP" id="PIf-js-k8A"/>
@@ -64,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="105" y="315"/>
+            <point key="canvasLocation" x="104.5" y="314.5"/>
         </scene>
     </scenes>
 </document>
