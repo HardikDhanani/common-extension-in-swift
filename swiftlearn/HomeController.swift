@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import CoreLocation
 
 class HomeController: UIViewController, UICollisionBehaviorDelegate {
     var animator: UIDynamicAnimator!
@@ -148,6 +148,66 @@ class HomeController: UIViewController, UICollisionBehaviorDelegate {
                 let Temp: HDContact = HDContact(contact: contact)
                 print(Temp.displayName())
             }
+        }
+        
+    
+        LocationManager.shared.observeLocations(.Block, frequency: .Continuous , onSuccess: { location in
+            // location contain your CLLocation object
+            
+            print(location)
+            NSLog("location %@", location)
+            
+        }) { error in
+            // Something went wrong. error will tell you what
+        }
+        
+        
+        LocationManager.shared.locateByIPAddress(onSuccess: { placemark in
+            // placemark is a valid CLPlacemark object
+            print(placemark)
+            NSLog("placemark %@", placemark)
+            
+        }) { error in
+            // something wrong has occurred; error will tell you what
+        }
+        
+        
+        LocationManager.shared.observeHeading(onSuccess: { heading in
+            // a valid CLHeading object is returned
+            
+            NSLog("Heading %@", heading)
+            
+        }) { error in
+            // something wrong has occurred
+        }
+        
+        
+        let address = "1 Infinite Loop, Cupertino (USA)"
+        LocationManager.shared.reverseAddress(address: address, onSuccess: { foundPlacemark in
+            // foundPlacemark is a CLPlacemark object
+            
+            NSLog("foundPlacemark %@", foundPlacemark)
+            
+        }) { error in
+            // failed to reverse geocoding due to an error
+        }
+        
+        let coordinates = CLLocationCoordinate2DMake(41.890198, 12.492204)
+        // Use Google service to obtain placemark
+        LocationManager.shared.reverseLocation(service: .Google, coordinates: coordinates, onSuccess: { foundPlacemark in
+            // foundPlacemark is a CLPlacemark object
+            
+            NSLog("foundPlacemark1 %@", foundPlacemark)
+            
+        }) { error in
+            // failed to reverse geocoding
+        }
+        
+        LocationManager.shared.observeInterestingPlaces { newVisit in
+            // a new CLVisit object is returned
+            
+            NSLog("newVisit %@", newVisit)
+            
         }
     }
     

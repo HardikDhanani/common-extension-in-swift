@@ -17,10 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ypd-J8-KpV" customClass="pap">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.23921568630000001" green="0.67450980390000004" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-as-ndt">
                                 <rect key="frame" x="45" y="222" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.49782402453171815" green="1" blue="0.91983018165634212" alpha="1" colorSpace="calibratedRGB"/>
@@ -64,6 +60,10 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ypd-J8-KpV" customClass="pap">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.23921568630000001" green="0.67450980390000004" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.36470588240000001" green="0.51372549020000002" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

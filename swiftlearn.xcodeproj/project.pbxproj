@@ -14,6 +14,14 @@
 		7028FA5F1C9FC73100246306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7028FA5E1C9FC73100246306 /* Assets.xcassets */; };
 		7028FA621C9FC73100246306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7028FA601C9FC73100246306 /* LaunchScreen.storyboard */; };
 		70EDB36E1CCA1049007AE8CA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 70EDB3701CCA1049007AE8CA /* Localizable.strings */; };
+		70FAE7F91D00356800277115 /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE7F61D00356800277115 /* BeaconManager.swift */; };
+		70FAE7FA1D00356800277115 /* BeaconRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE7F71D00356800277115 /* BeaconRequest.swift */; };
+		70FAE7FB1D00356800277115 /* RegionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE7F81D00356800277115 /* RegionRequest.swift */; };
+		70FAE8011D00357B00277115 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE7FD1D00357B00277115 /* LocationManager.swift */; };
+		70FAE8021D00357B00277115 /* HeadingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE7FE1D00357B00277115 /* HeadingRequest.swift */; };
+		70FAE8031D00357B00277115 /* LocationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE7FF1D00357B00277115 /* LocationRequest.swift */; };
+		70FAE8041D00357B00277115 /* VisitRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE8001D00357B00277115 /* VisitRequest.swift */; };
+		70FAE8061D00358100277115 /* DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FAE8051D00358100277115 /* DataTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +40,14 @@
 		70EDB36F1CCA1049007AE8CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		70EDB3711CCA104B007AE8CA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		70EDB3721CCA104D007AE8CA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		70FAE7F61D00356800277115 /* BeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
+		70FAE7F71D00356800277115 /* BeaconRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconRequest.swift; sourceTree = "<group>"; };
+		70FAE7F81D00356800277115 /* RegionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionRequest.swift; sourceTree = "<group>"; };
+		70FAE7FD1D00357B00277115 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		70FAE7FE1D00357B00277115 /* HeadingRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingRequest.swift; sourceTree = "<group>"; };
+		70FAE7FF1D00357B00277115 /* LocationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationRequest.swift; sourceTree = "<group>"; };
+		70FAE8001D00357B00277115 /* VisitRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitRequest.swift; sourceTree = "<group>"; };
+		70FAE8051D00358100277115 /* DataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,9 +87,41 @@
 				7028FA601C9FC73100246306 /* LaunchScreen.storyboard */,
 				7028FA631C9FC73100246306 /* Info.plist */,
 				701F24201CB2326D00623A92 /* CommonExtension.swift */,
+				70FAE7F41D00354400277115 /* Location */,
 				70EDB3701CCA1049007AE8CA /* Localizable.strings */,
 			);
 			path = swiftlearn;
+			sourceTree = "<group>";
+		};
+		70FAE7F41D00354400277115 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				70FAE8051D00358100277115 /* DataTypes.swift */,
+				70FAE7FC1D00356D00277115 /* Location Services */,
+				70FAE7F51D00355F00277115 /* Beacon Services */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
+		70FAE7F51D00355F00277115 /* Beacon Services */ = {
+			isa = PBXGroup;
+			children = (
+				70FAE7F61D00356800277115 /* BeaconManager.swift */,
+				70FAE7F71D00356800277115 /* BeaconRequest.swift */,
+				70FAE7F81D00356800277115 /* RegionRequest.swift */,
+			);
+			name = "Beacon Services";
+			sourceTree = "<group>";
+		};
+		70FAE7FC1D00356D00277115 /* Location Services */ = {
+			isa = PBXGroup;
+			children = (
+				70FAE7FD1D00357B00277115 /* LocationManager.swift */,
+				70FAE7FE1D00357B00277115 /* HeadingRequest.swift */,
+				70FAE7FF1D00357B00277115 /* LocationRequest.swift */,
+				70FAE8001D00357B00277115 /* VisitRequest.swift */,
+			);
+			name = "Location Services";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +198,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70FAE8041D00357B00277115 /* VisitRequest.swift in Sources */,
 				701F24211CB2326D00623A92 /* CommonExtension.swift in Sources */,
+				70FAE8011D00357B00277115 /* LocationManager.swift in Sources */,
+				70FAE8021D00357B00277115 /* HeadingRequest.swift in Sources */,
+				70FAE7F91D00356800277115 /* BeaconManager.swift in Sources */,
+				70FAE7FA1D00356800277115 /* BeaconRequest.swift in Sources */,
+				70FAE8031D00357B00277115 /* LocationRequest.swift in Sources */,
 				7028FA5A1C9FC73100246306 /* HomeController.swift in Sources */,
+				70FAE8061D00358100277115 /* DataTypes.swift in Sources */,
 				7028FA581C9FC73100246306 /* AppDelegate.swift in Sources */,
+				70FAE7FB1D00356800277115 /* RegionRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

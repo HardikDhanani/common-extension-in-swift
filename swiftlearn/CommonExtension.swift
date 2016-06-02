@@ -941,7 +941,7 @@ var sortedContactKeys = [String]()
 
 extension UIViewController
 {
-    // Get all contacts from address book
+    // MARK: Get all contacts from address book
     
     func getContacts(completion:  ContactsHandler)
     {
